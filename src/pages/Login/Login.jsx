@@ -1,24 +1,30 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
+import SocialLogin from '../Shared/SocialLogin/socialLogin';
 
 const Login = () => {
-    const {signInUser}=useContext(AuthContext)
-    const handleLogin=event=>{
+    const { signInUser } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const form = location.state?.from?.pathname || '/';
+    const handleLogin = event => {
         event.preventDefault();
         const from = event.target;
         const email = from.email.value;
         const password = from.password.value;
-        signInUser(email,password)
-        .then(result=>{
-            const loggedUser=result.user;
-            from.reset()
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-        
+        signInUser(email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                from.reset();
+                 navigate(form, { replace: true })
+                
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
     }
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -35,16 +41,16 @@ const Login = () => {
                                     <span className="label-text">Email</span>
                                 </label>
                                 <input type="email"
-                                name='email'
-                                placeholder="example@gmail.com" className="input input-bordered" />
+                                    name='email'
+                                    placeholder="example@gmail.com" className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" 
-                                name='password'
-                                placeholder="password" className="input input-bordered" />
+                                <input type="password"
+                                    name='password'
+                                    placeholder="password" className="input input-bordered" />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
@@ -54,6 +60,7 @@ const Login = () => {
                             </div>
                         </form>
                         <h2>New To Car Doctor ? <Link className='text-orange-600' to='/signUp'>Sign Up</Link></h2>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,12 @@ const Order = () => {
     const [orders, setOrders] = useState([]);
     const url = `http://localhost:5000/checkOuts?email=${user.email}`
     useEffect(() => {
-        fetch(url)
+        fetch(url,{
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('car-secret-token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setOrders(data)
