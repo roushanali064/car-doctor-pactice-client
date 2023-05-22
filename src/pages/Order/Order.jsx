@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 const Order = () => {
     const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
-    const url = `http://localhost:5000/checkOuts?email=${user.email}`
+    const url = `https://car-doctor-server-roan-six.vercel.app/checkOuts?email=${user.email}`
     useEffect(() => {
         fetch(url,{
             method: 'GET',
@@ -31,7 +31,7 @@ const Order = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/checkOuts/${id}`, {
+                fetch(`https://car-doctor-server-roan-six.vercel.app/checkOuts/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -54,7 +54,7 @@ const Order = () => {
     }
 
     const handleUpdate = id => {
-        fetch(`http://localhost:5000/checkOuts/${id}`, {
+        fetch(`https://car-doctor-server-roan-six.vercel.app/checkOuts/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

@@ -26,7 +26,7 @@ const CheckOut = () => {
             service_id: _id
         }
         console.log(checkOut)
-        fetch('http://localhost:5000/checkOuts', {
+        fetch('https://car-doctor-server-roan-six.vercel.app/checkOuts', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
